@@ -1,0 +1,42 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+        "label": "A2A Agent",
+        "type": "shell",
+        "command": "cd apps\\a2a-agent && ..\\..\\pocenv\\Scripts\\python -m uvicorn a2a_stub:app --host 127.0.0.1 --port 9999",
+        "options": {
+            "shell": {
+            "executable": "cmd.exe",
+            "args": ["/d", "/c"]
+            }
+        },
+        "presentation": {
+            "panel": "new",
+            "group": "dev",
+            "reveal": "always"
+        }
+    },
+    {
+        "label": "LangGraph",
+        "type": "shell",
+        "command": "cd apps\\orchestrator && ..\\..\\pocenv\\Scripts\\langgraph.exe dev --no-reload",
+        "options": {
+            "shell": {
+            "executable": "cmd.exe",
+            "args": ["/d", "/c"]
+            }
+        },
+        "presentation": {
+            "panel": "new",
+            "group": "dev",
+            "reveal": "always"
+        }
+    },
+    {
+        "label": "Dev: A2A + LangGraph",
+        "dependsOn": ["A2A Agent", "LangGraph"],
+        "dependsOrder": "parallel"
+    }
+  ]
+}

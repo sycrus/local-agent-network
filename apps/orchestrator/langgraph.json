@@ -1,0 +1,10 @@
+{
+  "$schema": "https://langgra.ph/schema.json",
+  "dependencies": ["."],
+  "graphs": {
+    "chat": "orchestrator_agent.graph:graph",
+    "delegate": "orchestrator_agent.delegate_graph:graph"
+  },
+  "env": ".env",
+  "image_distro": "wolfi"
+}
