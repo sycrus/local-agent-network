@@ -115,7 +115,20 @@ http://127.0.0.1:2024/mcp
 
 ---
 
-### 4) Verify MCP tools
+### 4) Start vLLM
+
+Enter WSL if you are not already in it.
+```
+wsl
+```
+
+Start the vLLM server via shell script:
+```bat
+cd ~
+~/bin/start-vllm.sh
+```
+
+### 5) Verify MCP tools
 
 ```bat
 curl http://127.0.0.1:2024/mcp ^

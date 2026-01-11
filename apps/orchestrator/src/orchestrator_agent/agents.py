@@ -1,37 +1,21 @@
-"""LangGraph single-node graph template.
-
-Returns a predefined response. Replace logic and configuration as needed.
-"""
-
-from __future__ import annotations
+# agents.py
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any, Dict, List, TypedDict
+from typing_extensions import Protocol
 
 from langgraph.graph import StateGraph
 from langgraph.runtime import Runtime
-from typing_extensions import TypedDict
 from langchain_openai import ChatOpenAI
 
-from orchestrator_agent.agents import planner_agent, run_delegate
-
 class Context(TypedDict, total=False):
-    """Context parameters for the agent.
-
-    Set these when creating assistants OR when invoking the graph.
-    See: https://langchain-ai.github.io/langgraph/cloud/how-tos/configuration_cloud/
-    """
+    """Context parameters for the agent."""
 
     my_configurable_param: str
 
-
 @dataclass
 class State:
-    """Input state for the agent.
-
-    Defines the initial structure of incoming data.
-    See: https://langchain-ai.github.io/langgraph/concepts/low_level/#state
-    """
+    """Input state for the agent."""
 
     changeme: str = "example"
     trace: List[str] = field(default_factory=list)
@@ -70,13 +54,3 @@ async def call_model(state: State, runtime: Runtime[Context]) -> Dict[str, Any]:
         "changeme": msg.content,
         "trace": state.trace + ["call_model"],
     }
-
-builder = StateGraph(State, context_schema=Context)
-
-builder.add_node("planner_agent", planner_agent)
-builder.add_node("call_model", call_model)
-
-builder.add_edge("__start__", "planner_agent")
-builder.add_edge("planner_agent", "call_model")
-
-graph = builder.compile(name="Orchestrator Graph")
